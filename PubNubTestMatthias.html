@@ -1,0 +1,20 @@
+<!-- View the Full Documentation. -->
+<!-- Include the PubNub Library -->
+hallo <script src="https://cdn.pubnub.com/pubnub-dev.js"></script>
+
+<!-- Instantiate PubNub -->
+<script type="text/javascript">
+
+    var PUBNUB_demo = PUBNUB.init({
+        publish_key: 'pub-c-e4f802b4-bcaa-4a28-8aab-a06f5a3d53e1',
+        subscribe_key: 'sub-c-afb17efa-61a9-11e6-962a-02ee2ddab7fe'
+    });
+
+    
+    PUBNUB_demo.subscribe({
+    channel: 'demo_tutorial',
+    message: function(m){console.log(m)}
+});
+   
+    
+</script>

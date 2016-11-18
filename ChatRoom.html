@@ -1,0 +1,93 @@
+<!doctype html>
+<html>
+<head>
+    
+	<title>Ein einfacher Chat 1</title>
+	<script src="http://cdn.pubnub.com/pubnub.min.js"></script>
+	<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.1.1/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="ChatRoom.css">
+</head>
+<body style="background-color:ghostwhite">
+	<h4 id=Überschrift style="text-align:center">Wilkommen  deinem Team</h4>
+	<hr/>
+
+	<div id="userList" class="table-bordered userList" ></div>
+
+	<button id="leaveButton" class="btn btn-danger leaveButton" onclick="leave()">Verlassen</button>
+
+	<div id="chatHistory" class="table-bordered chatHistory"></div>
+
+	<input type="text" id="message" placeholder="Schreibe etwas hier rein" class="message"/>
+
+	<button id="sendButton" class="btn btn-primary sendButton">Senden</button>
+
+	<script type="text/javascript">
+		(function() { 
+			var publish_key = 'pub-c-39594782-c4b0-4fb3-80fe-74e262353bf6';
+			var subscribe_key = 'sub-c-7ae61028-e9dd-11e3-92e7-02ee2ddab7fe';
+			
+			var username = window.location.search.substring(1).split('=')[1];
+            var Chat = window.location.search.substring(1).split('=')[3];
+            channel = Chat;
+			pubnub =PUBNUB.init({
+				publish_key : publish_key,
+				subscribe_key : subscribe_key,
+				uuid : username
+			});
+
+			pubnub.subscribe({
+				channel : channel,
+				callback : function(message) { 
+					$('#chatHistory')[0].innerHTML = message + '<br/>' + $('#chatHistory')[0].innerHTML; 
+				},
+				presence : function(state) { 
+					if (state.action == 'join') {
+						if ($('#userList').text().indexOf(state.uuid) == -1) {
+							$('#userList')[0].innerHTML = state.uuid + '<br/>' + $('#userList')[0].innerHTML;
+						}
+					} else if (state.action == 'leave' || state.action == 'timeout') { 
+						var index = $('#userList')[0].innerHTML.indexOf(state.uuid);
+						if ( index !== -1) {
+							$('#userList')[0].innerHTML = 
+								$('#userList')[0].innerHTML.substring(0,index) + 
+								$('#userList')[0].innerHTML.substring(index+state.uuid.length+4);
+						}
+					}
+					
+				}
+			});
+
+            $("#message").keyup(function(event){
+    if(event.keyCode == 13){
+        
+        $("#sendButton").click();
+    }
+});
+
+            
+			pubnub.bind('click', pubnub.$('sendButton'), function(e) { 
+				pubnub.publish({
+					channel : channel, 
+					message : pubnub.get_uuid() + ' : '  + $('#message').val()
+				});
+				$('#message').val('');
+			});
+		})();
+        
+        function Ueberschrift(){ document.getElementById("#Ueberschrift").innerHTML.value="Hi";
+        }
+	</script>
+
+	<script type="text/javascript">
+		function leave() { 
+			pubnub.unsubscribe({
+				channel : channel,
+				callback : function() {
+					window.location = 'Login.html';
+				}
+			});
+		}
+	</script>
+</body>
+</html>
