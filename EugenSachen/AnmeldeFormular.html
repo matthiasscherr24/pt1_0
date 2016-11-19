@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"/>
+  <title>Projectfeed</title>
+
+  <!-- CSS  -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+</head>
+    <body>
+		<nav>
+    <div class="blue nav-wrapper">
+      <div class="col s12">
+        <a href="index.html" class="breadcrumb">Alle Projekte</a>
+        <a href="Projekt.html" class="breadcrumb">Projekt</a>
+      	<a href="#!" class="breadcrumb">Anmelden</a>
+      </div>
+    </div>
+  </nav>
+		<div class="row">
+    <form class="col s12">
+      <div class="row">
+
+		<div class="input-field col s6">
+          <i class="material-icons prefix">account_circle</i>
+          <input id="icon_prefix" type="text" class="validate">
+          <label for="icon_prefix">Vorname</label>
+        </div>
+
+        <div class="input-field col s6">
+          <input id="icon_prefix" type="text" class="validate">
+          <label for="icon_prefix">Nachname</label>
+        </div>
+
+		<div class="input-field col s12">
+			<i class="material-icons prefix">email</i>
+          <input id="email" type="email" class="validate">
+          <label for="email" data-error="wrong" data-success="right">Email</label>
+        </div>
+
+        <div class="input-field col s12">
+          <i class="material-icons prefix">phone</i>
+          <input id="icon_telephone" type="tel" class="validate">
+          <label for="icon_telephone">Telefonnummer</label>
+        </div>
+		  
+	   	  <div class="input-field col s12">
+			  <i class="material-icons prefix">message</i>
+            <textarea id="textarea1" class="materialize-textarea" length="120"></textarea>
+            <label for="textarea1">Motivation</label>
+          </div>
+		  
+		  
+      </div>
+
+      <ul class="collapsible popout" data-collapsible="accordion">
+
+        <li>
+        <div class="collapsible-header"><i class="material-icons">library_books</i>lokale Politische Kontakte</div>
+        <div class="collapsible-body">
+        <p id="1b" class="range-field">
+            <input type="range" id="test5" min="0" max="100" />
+        </p>
+        </div>
+    </li>
+
+    <li>
+      <div class="collapsible-header"><i class="material-icons">library_books</i>Programmieren</div>
+      <div class="collapsible-body">
+        <p id="1b" class="range-field">
+            <input type="range" id="test5" min="0" max="100" />
+        </p>
+       </div>
+    </li>
+
+    <li>
+      <div class="collapsible-header"><i class="material-icons">library_books</i>Jura</div>
+      <div class="collapsible-body">
+        <p id="1b" class="range-field">
+            <input type="range" id="test5" min="0" max="100" />
+        </p>
+    </div>
+    </li>
+
+    <li>
+      <div class="collapsible-header"><i class="material-icons">library_books</i>Handwerken</div>
+      <div class="collapsible-body">
+        <p id="1b" class="range-field">
+            <input type="range" id="test5" min="0" max="100" />
+        </p>
+    </div>
+    </li>
+
+    <li>
+      <div class="collapsible-header"><i class="material-icons">library_books</i>Anpacken</div>
+      <div class="collapsible-body">
+        <p id="1b" class="range-field">
+            <input type="range" id="test5" min="0" max="100" />
+        </p>
+    </div>
+    </li>
+
+    <li>
+      <div class="collapsible-header"><i class="material-icons">library_books</i>Marketing</div>
+      <div class="collapsible-body">
+        <p id="1b" class="range-field">
+            <input type="range" id="test5" min="0" max="100" />
+        </p>
+    </div>
+    </li>
+
+    <li>
+      <div class="collapsible-header"><i class="material-icons">library_books</i>Netzwerken</div>
+      <div class="collapsible-body">
+        <p id="1b" class="range-field">
+            <input type="range" id="test5" min="0" max="100" />
+        </p>
+    </div>
+    </li>
+
+  </ul>
+    </form>
+  </div>
+		
+		
+		
+    <script>
+     $(document).ready(function(){
+    $('.tooltipped').tooltip({delay: 50});
+  });</script>
+  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script src="js/materialize.js"></script>
+  <script src="js/init.js"></script>
+  
+    
+    <script>
+    $(document).ready(function(){
+    $('.collapsible').collapsible({
+      accordion : false // A setting that changes the collapsible behavior to expandable instead of the default accordion style
+    });
+  });</script>
+		
+		<script>
+		$(document).ready(function(){
+			 $("#laden").hide();
+  });</script>
+		
+		<script>$(document).ready(function(){
+      $('.slider').slider({full_width: true});
+    });</script>
+		
+  
+		
+  
+  </body>
+</html>

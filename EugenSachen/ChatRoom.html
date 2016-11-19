@@ -29,9 +29,9 @@
   <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
 	
 </head>
-<body style="background-color: #FFFFFF">
+<body style="background-color:ghostwhite">
 	 <nav>
-    <div class="blue darken-2 nav-wrapper z-depth-2">
+    <div class="blue lighten-2 nav-wrapper z-depth-2">
 				<!--<form>
 					<div class="input-field right">
 					<input id="search" type="search" required>
@@ -41,51 +41,49 @@
 						<i class="material-icons">close</i>
 					</div>
 				</form>-->
-
-			<img class="nav-img-pt" src="media/images/projecttogether.png">
-			<!--<img class="hide-on-small-only" src="projecttogether.png" href="ProjectFeed.php"> <!---->
-			<!---<img class="hide-on-med-and-up-pt" style="margin: auto" height="90%" src="projecttogether.png" href="ProjectFeed.php"> --->
-
-	 </div>
+    <img class="hide-on-small-only" style="margin-left:30%" height="95%" src="projecttogether.png" href="index.html">
+		<img class="hide-on-med-and-up" style="margin-left:10%;margin-top:3px" height="90%" src="projecttogether.png" href="index.html">
+		 </div>
   </nav>
 	<div class="row">
 	<div class="hide-on-small-only">
     <h4 id=Überschrift style="text-align:center"></h4>
 	<hr/>
 		</div>
-
+	
 	<!--<div id="userList" class="userList col s3" ></div>-->
+    
+	
 
-
-
-	<div id="chatHistory" class="col s12 table-bordered chatHistory" style="height:445px;width:100%;overflow-x:hidden;overflow-y: visible;"></div>
-
-
-
-
+	<div id="chatHistory" class="col s12 table-bordered chatHistory" style="height:445px;width:100%%;overflow-x:hidden;overflow-y: visible;"></div>
+		
+		
+	
+		
 <div>
 	<!--<button id="leaveButton" class="btn btn-danger leaveButton left col s2" onclick="leave()">Verlassen</button>-->
 	<div class="row">
 	<div class="input-field col s9 offset-s1">
 
 	 <textarea  id="message" class="materialize-textarea" ></textarea>
-	<label for="message">Deine Nachricht</label>
+	<label for="message">Nachricht</label>
 	</div>
 	<div class="col s2">
 		<br>
 		<br>
-		<a class="btn-floating btn-tiny waves-effect waves-light blue accent-2 hide-on-med-and-up" id="sendButton"><i class="material-icons">send</i></a>
+	<a class="btn-floating btn-large waves-effect waves-light blue hide-on-small-only" id="sendButton"><i class="material-icons">send</i></a>
+		<a class="btn-floating btn-tiny waves-effect waves-light blue hide-on-med-and-up" id="sendButton"><i class="material-icons">send</i></a>
 		</div>
 		</div>
  </div>
 	</div>
 	<script type="text/javascript">
-		(function() {
+		(function() { 
 			var publish_key = 'pub-c-41e3c5e3-9401-4a1f-87ab-2d10b53acd1c';
 			var subscribe_key = 'sub-c-b23c5580-624b-11e6-9c81-02ee2ddab7fe';
-
+			
 			var username = window.location.search.substring(1).split('=')[1];
-
+        
             var Chat = window.location.search.substring(1).split('=')[3];
             Head(username,Chat);
             channel = Chat;
@@ -94,127 +92,128 @@
 				subscribe_key : subscribe_key,
 				uuid : username
 			});
-
-
+			
+			
 			pubnub.subscribe({
 				channel : channel,
 				callback : function(message) {
-
+					
 					if(message.includes(username)==1){
-						//TODO Farbeinstellungen Chatboxen;
-
-    					$('#chatHistory')[0].innerHTML =$('#chatHistory')[0].innerHTML+'<div class="card-panel z-depth-1 col s9 offset-s3 blue accent-2 ">'+message+'</div>';}
+					
+    					$('#chatHistory')[0].innerHTML =$('#chatHistory')[0].innerHTML+'<div class="card-panel z-depth-1 col s9 offset-s3 blue lighten-5">'+message+'</div>';}
 					else{
-						$('#chatHistory')[0].innerHTML =$('#chatHistory')[0].innerHTML+'<div class="card-panel z-depth-1 col s9 blue-text text-lighten-4">'+message+'</div>';}
-
-
-
-
+						$('#chatHistory')[0].innerHTML 			  =$('#chatHistory')[0].innerHTML+'<div class="card-panel z-depth-1 col s9 grey lighten-5">'+message+'</div>';}
+						
+					
+					
+					
 					$('#chatHistory').scrollTop(9999);
-
+					
 				},
-				presence : function(state) {
+				presence : function(state) { 
 					if (state.action == 'join') {
 						if ($('#userList').text().indexOf(state.uuid) == -1) {
 							$('#userList')[0].innerHTML = state.uuid + '<br/>' + $('#userList')[0].innerHTML;
 						}
-					} else if (state.action == 'leave' || state.action == 'timeout') {
+					} else if (state.action == 'leave' || state.action == 'timeout') { 
 						var index = $('#userList')[0].innerHTML.indexOf(state.uuid);
 						if ( index !== -1) {
-							$('#userList')[0].innerHTML =
-								$('#userList')[0].innerHTML.substring(0,index) +
+							$('#userList')[0].innerHTML = 
+								$('#userList')[0].innerHTML.substring(0,index) + 
 								$('#userList')[0].innerHTML.substring(index+state.uuid.length+4);
 						}
 					}
-
+					
 				}
-
+					
 			});
 
             $("#message").keyup(function(event){
     			if(event.keyCode == 13){
+	
+        	
 				//Uhrzeit bestimmen
 				var date=new Date();
 				var Hours =date.getHours();
 				var Minutes =date.getMinutes();
-
+				
 				if (Hours<10){
 					Hours= '0'+date.getHours();
-
+					
 				}
 				if (Minutes<10){
 					Minutes= '0'+date.getMinutes();
 				}
-
-				pubnub.publish({ //Das was rauskommt
-					channel : channel,
-					message : '<span class="white-text"><span class="smalltext85-pt">'+pubnub.get_uuid()+'</span><span class="black-text"></br>'+ $('#message').val()+'<span class="white-text right smalltext-pt">'+Hours+':'+ Minutes+'</span></br>'+'</span>'
-					//TODO Namen kleiner machen!
+				
+				pubnub.publish({
+					channel : channel, 
+					message : '<span class="grey-text">'+pubnub.get_uuid()+'<span class="black-text"></br>'+ $('#message').val()+'<span class="grey-text right">'+Hours+':'+ Minutes+'</span></br>'+'</span>'
+					
 				});
 				$('#message').val('');
-
-
+				
+			
     			}
 			});
-
+			
 			$(document).ready(function() {
-			pubnub.history({ //Die abgespeicherten Nachrichten
+			pubnub.history({
   					channel: Chat,
 					count: 50},
 					function(messages){
 						var m ='';
 
 						for(var i = 0; i < messages[0].length; i++) {
-
+							
 							if(messages[0][i].includes(username)==1){
-    					m=m+'<div class="card-panel z-depth-1 col s9 offset-s3 blue accent-2">'+messages[0][i]+'</div>';}
-							else{m=m+'<div class="card-panel z-depth-1 col s9 blue-text text-lighten-4">'+messages[0][i]+'</div>';}
+    					m=m+'<div class="card-panel z-depth-1 col s9 offset-s3 blue lighten-5">'+messages[0][i]+'</div>';}
+							else{m=m+'<div class="card-panel z-depth-1 col s9 grey lighten-5">'+messages[0][i]+'</div>';}
 						}
 						$('#chatHistory')[0].innerHTML = m + $('#chatHistory')[0].innerHTML;
-						$('#chatHistory').scrollTop(9999);
+						$('#chatHistory').scrollTop(9999);		
 								 }
 			);});
-
+            
 			pubnub.bind('click', pubnub.$('sendButton'), function(e) {
 
 				//Uhrzeit bestimmen
 				var date=new Date();
 				var Hours =date.getHours();
 				var Minutes =date.getMinutes();
-
+				
 				if (Hours<10){
 					Hours= '0'+date.getHours();
-
+					
 				}
 				if (Minutes<10){
 					Minutes= '0'+date.getMinutes();
 				}
-
+				
 				pubnub.publish({
-					channel : channel,
+					channel : channel, 
 					message : '<span class="grey-text">'+pubnub.get_uuid()+'<span class="black-text"></br>'+ $('#message').val()+'<span class="grey-text right">'+Hours+':'+ Minutes+'</span></br>'+'</span>'
-
+					
 				});
 				$('#message').val('');
-
+				
 			});
-
+			
 		})();
-
-
+        
+	
         function Head(a,b){
  document.getElementById("Überschrift").innerHTML="Willkommen "+a+" bei dem Projekt: "+b;
         }
-
-
-
+		
+		
+		
 	</script>
-
+	
 	<!--Script-->
 	<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
   <script src="js/materialize.js"></script>
   <script src="js/init.js"></script>
-
+	
 	<!--TextArea-->
 	<script>
 	 $(document).ready(function() {
@@ -224,8 +223,8 @@
 	</script>
 
 	<script type="text/javascript">
-
-		function leave() {
+		
+		function leave() { 
 			pubnub.unsubscribe({
 				channel : channel,
 				callback : function() {
@@ -233,7 +232,7 @@
 				}
 			});
 		}
-
+        
 	</script>
 </body>
 </html>

@@ -1,0 +1,26 @@
+.bottom-right-pt{
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+}
+
+.pt-red {
+    color: #FF0000;
+    position: fixed;
+    bottom: 0;
+    right: 0;
+}
+
+.space-betw-p-pt{
+    margin:0px;
+    padding: 0px;
+}
+
+.fullscreen-pt {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    overflow: auto;
+}

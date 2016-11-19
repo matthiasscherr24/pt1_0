@@ -1,13 +1,6 @@
 <!DOCTYPE html>
 <html>
-<head>
-	
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-
-	
-	<meta charset="UTF-8" />
-	<title>ProjectTogetherLogin</title>
-</head>
+<head></head>
 <body>
    
    <div id="login_form">
@@ -53,7 +46,6 @@
         
    		function hideAndShow(){
 		
-        console.log("Schritt1"); 
             document.getElementById('login_form').style.display='none';
             document.getElementById('register_button').style.display='none'; 
             document.getElementById('register_form').style.display='block'; 

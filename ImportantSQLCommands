@@ -37,5 +37,15 @@ AutoIncrement zurücksetzen:
 ALTER TABLE tablename AUTO_INCREMENT = 1
 
 
+Spalte löschen:
+ALTER TABLE table_name
+DROP column_name;
 
 
+Namen ändern:
+
+ALTER TABLE `table_name` CHANGE `old_name` `new_name` VARCHAR(255) NOT NULL;
+
+
+
+//TODO Die maximale Länge für Benutzernamen für eine Mysql-Datenbank beträgt 16!

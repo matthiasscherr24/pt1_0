@@ -4,7 +4,7 @@
    	
 	echo "Herzlich Willkommen in Register"; 
 	
-	$server="localhost"; 
+	$server="localhost";
 	
 	
 	function registerUserViaServer(){

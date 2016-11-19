@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+
+<html> 
+<body>
+    
+    <h2>JSON Zeug</h2>
+    
+    <p id=demo>demo</p>
+    
+    <script>
+    
+        var text = '{"name":"Andreas Maier","status":"Freund","telefon":"09976/1085"}';
+    var obj = JSON.parse(text);
+        
+        document.getElementById("demo").innerHTML=
+            obj.name + "<br>" + obj.status + "<br>" + obj.telefon;
+        
+    </script>
+    
+    
+    
+    </body>
+    
+</html>

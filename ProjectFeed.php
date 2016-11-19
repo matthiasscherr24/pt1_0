@@ -2,10 +2,6 @@
 session_start();
 include 'Version1DB.php';
 include 'session_helper.php';
-include 'EugenChat2.txt';
-
-
-include 'client.html'; 
 ?>
 
 
@@ -22,17 +18,15 @@ include 'client.html';
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
     <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+    <link rel="stylesheet" href="css/pt.css" type="text/css">
+
 
     <!--JS-->
-    <script src="js/pubnub-3.16.1.min.js"></script>
-
 
 </head>
 
 <body>
 <!--Import jQuery before materialize.js-->
-
-
 
 <div class="navbar-fixed">
     <!--Obere Navigationsbar-->
@@ -52,8 +46,17 @@ include 'client.html';
                 <li><a id="SidNavSuchen" href="#" data-activates="SuchenNav" class="white-text"><i class="material-icons">search</i></a></li>
                 <li><a id="SidNavChat" href="#" data-activates="ChatNav" class="white-text"><i class="material-icons">chat_bubble_outline</i></a></li>
                 <li><a id="SidNavProjekte" href="#" data-activates="ProjektNav" class="white-text"><i class="material-icons">supervisor_account</i></a></li>
-                <li><a id="SidNavProfil" href="#" data-activates="ProfilNav" class="white-text"><i class="material-icons">perm_identity</i></a></li>
+                <li><a id="SidNavProfil"  data-activates="ProfilNav" class="white-text"><i class="material-icons">perm_identity</i></a></li>
+                <?php
+                if (areCredentialsSent()||isSessionDataAvailable()){
+                }
+                else{
+                echo "<li><div><a href=\"#AnmeldenRegistrieren\" class=\"modal-trigger white-text\">Login</a></div>
+                </li>";
+                }
+                ?>
             </ul>
+            <!-- All das Seitliche-->
             <!-- Chat Seitliche Navigation-->
             <ul class="side-nav" id="ChatNav">
                 <li><a href="sass.html">Chat1</a></li>
@@ -64,7 +67,6 @@ include 'client.html';
                 <div class="divider"></div>
                 <li><a href="mobile.html">Chat4</a></li>
             </ul>
-
             <!-- Projekt Infos Seitliche Navigation-->
             <ul class="side-nav" id="ProjektNav">
                 <li><a href="sass.html">Projekt1</a></li>
@@ -75,7 +77,6 @@ include 'client.html';
                 <div class="divider"></div>
                 <li><a href="mobile.html">Projekt4</a></li>
             </ul>
-
             <!-- Profil Seitliche Navigation-->
             <ul class="side-nav" id="ProfilNav">
                 <li><a href="sass.html">Profil ansehen</a></li>
@@ -85,7 +86,6 @@ include 'client.html';
                 <li><a href="collapsible.html">Profil suchen</a></li>
             </ul>
             <!-- Suchen Seitliche Navbar-->
-
             <ul class="side-nav" id="SuchenNav">
                 <div class="row">
                     <div class="col s12">
@@ -114,164 +114,213 @@ include 'client.html';
 </div>
 
 
-
-<!-- Sektionen-->
 <div class="row">
-
     <div class="col s12">
         <!-- Oberste TabFenster-->
         <ul class="tabs">
-            <li class= "tab col s6"><a class="blue-text text-darken-2 active" href="#AlleProjekte">Alle Projekte</a></li>
+            <li class= "tab col s6"><a class="blue-text text-darken-2 active" href="#all_projects">Alle Projekte</a></li>
             <li class="tab col s6"><a class="blue-text text-darken-2" href="#DeineProjekte">Deine Projekte</a></li>
         </ul>
     </div>
 
+ <!--Beim Drücken des Plus-Buttons -->
+    <div id="add_project_form" style="display: none; class="row">
+         <div class="container">
+                <form action="ProjectFeed.php" method="post">
+                    <label for="project_title">Dein Projektname:</label>
+                    <input id="project_title" name="projecttitle" type="text"/>
+
+                    <label for="project_description">Deine Projektbeschreibung:</label>
+                    <input id="project_description" name="projectdescription" type="text"/>
+
+                    <label for="project_category">Deine Projektcateogry</label>
+                    <input id="project_category" name="projectcategory" type="checkbox"/>
+                    <button type="submit">Starten</button>
+                </form>
+         </div>
+    </div>
+
+</div>
+
     <!-- Registerkarte alle Projekte-->
-    <div id="AlleProjekte" class="col s12">
+    <div id="all_projects" class="container">
 
+        <div class="row">
         <!-- Leuchturm Projekt-->
-        <div class="section">
-            <img href="#AnRe" class="responsive-img modal-trigger" src="projecttogether.jpg">
-            <div class="video-container">
-                <iframe width="853" height="480" src="//www.youtube.com/embed/p_W-7OdcL4U?rel=0" frameborder="0" allowfullscreen></iframe>
+            <div id="leutturm_projekt" class="card">
+                <div class="card-image waves-effect waves-block waves-light">
+                    <img class="activator" src="media/images/aias.jpg">
+                </div>
+                <div class="card-content">
+                    <span class="card-title activator grey-text text-darken-4">AIAS-Deutschland<i class="material-icons right">more_vert</i></span>
+                    <p><a href="ProjectOverview.php">Kennen lernen</a></p>
+
+                </div>
+                <div class="card-reveal">
+                    <span class="card-title grey-text text-darken-4">AIAS-Deutschland<i class="material-icons right">close</i></span>
+
+                    <span style="align-content: center">
+                    </span>
+
+                    <span><p>AIAS ist ein gemeinnütziger Verein von Studenten. Alle 15 Minuten erkrankt in Deutschland ein Mensch an Blutkrebs.
+                            </br>Jeder 7. Patient muss sterben. Doch Blutkrebs ist heilbar: Deine Stammzellen können Leben retten! Unsere Vision ist, dass sich jeder Student in Deutschland in die internationale Stammzelldatenbank aufnehmen lässt.</p></span>
+                    <p><a href="#">Kennen lernen</a></p>
+
+
+                </div>
             </div>
+
+                <?php
+                //PHP-CODE
+                    if (areCredentialsSent()||isSessionDataAvailable()){ //Credentials means LoginData as well as Data from Register
+                        if(!isSessionDataAvailable()){
+                            setSessionData();
+                        }
+                        //Zugangsdaten
+                        $userEmail=$_SESSION["user_email"];
+                        $userPassword=$_SESSION["user_password"];
+                        $loginCase = true;
+                        //Jetzt kommt der Fall, dass man über eine Registrierung kommt
+                        if(isset($_POST['register_firstname'])) {
+                            $loginCase = false;  //Registriere mich ja
+                        }
+
+                        $userId = registerUserViaServerRetrieveId($userEmail,$loginCase);//Dies ist nur beim Registrieren der Fall!
+                        $_SESSION["userId"]=$userId; //Wichtig, Session für UserId
+
+                        //Jetzt wird die eigentliche Datenbankverbindung aufgebaut
+                        $ProjectDatabase = new Version1DB("localhost",$userId, $userPassword);
+                        $dbConnection = $ProjectDatabase->connect();
+                        // Case user adds Projects:
+                        if (isset($_POST["projecttitle"])){
+                            $ProjectDatabase->addNewProjectTitle($dbConnection, $_POST["projecttitle"],$_POST["projectdescription"],0);
+                        }
+                        $allProjectList = $ProjectDatabase->getAllProjects($dbConnection);
+                        printAllProjectsTable($allProjectList);
+
+                        //Button für Eingeloggte:
+                        $htmlPlusBtnLoggedIn="<div onclick='showAddProject()' class=\"fixed-action-btn-pt\">
+                            <a class=\"btn-floating btn-large\" style=\"background-color:rgba(132,216,255,0.5)\">
+                            <i class=\"large material-icons\">add</i> 
+                            </a>
+                            </div>"; //TODO Der Button muss noch zentriert werden!
+
+
+                        echo $htmlPlusBtnLoggedIn;
+
+                    }
+                    else{
+
+                        echo "Du bist noch nicht eingeloggt";
+
+                        $user="Eugen";
+                        $pass="Eugen";
+                        $ProjectDatabase = new Version1DB("localhost",$user, $pass);
+                        $dbConnection = $ProjectDatabase->connect();
+
+                        //Case: User adds ProjectTitle
+
+                        if (isset($_POST["projecttitle"])){
+
+                            //TODO Evtl. redundant Evtl. was reinfügen.
+                        }
+                        $allProjectList = $ProjectDatabase->getAllProjects($dbConnection);
+                        printAllProjectsTable($allProjectList);
+
+                        //Button für noch nicht Eingeloggte -zum Anmelden/Registrieren
+
+                        $htmlPlusBtnNotLoggedIn="<div href=\"#AnmeldenRegistrieren\" class=\"fixed-action-btn-pt modal-trigger\">
+                        <a class=\"btn-floating btn-large\" style=\"background-color:rgba(132,216,255,0.5)\">
+                            <i class=\"large material-icons\">add</i> 
+                        </a>
+                    </div>"; //TODO Der Button muss noch zentriert werden!
+
+
+                        echo $htmlPlusBtnNotLoggedIn;
+                    }
+
+                    function printAllProjectsTable($projectList) {
+                        $img_url = "http://localhost:8888/media/images/projects/";
+                        $rowCount = 0;
+
+                        while ($row = $projectList->fetch()) {
+
+                            $projectId=$row["projectId"];
+                            $projectTitle = $row["projectTitle"];
+                            $projectDescription = $row["projectDescription"];
+
+                            //Hier Cards ausgeben
+                            $htmlForCards = "<div id=\"leutturm_projekt\" class=\"card\">
+                <div class=\"card-image waves-effect waves-block waves-light\">
+                    <img class=\"activator\" src=\"media/images/aias.jpg\">
+                </div>
+                <div class=\"card-content\">
+                    <span class=\"card-title activator grey-text text-darken-4\">$projectTitle<i class=\"material-icons right\">more_vert</i></span>
+                    <div><a onclick=\"joinProject($projectId, '$projectTitle')\">Kennen lernen</a></div>
+                </div>
+                <div class=\"card-reveal\">
+                    <span class=\"card-title grey-text text-darken-4\">$projectTitle<i class=\"material-icons right\">close</i></span>
+
+                    <span style=\"align-content: center\">
+                    </span>
+
+            
+                    <span><p>$projectDescription<p>
+                    <a onclick=\"joinProject($projectId, '$projectTitle')\">Chat</a> </p> 
+                    </span><!-- Außen Kennen lernen-->
+
+
+                </div>
+            </div>";
+                            echo $htmlForCards;
+                            $rowCount++;
+                        }
+                    }
+
+                    function registerUserViaServerRetrieveId($userEmail, $loginCase){
+
+                        $ProjectDatabase = new Version1DB("localhost", "Registrator", "Wqud4YjsNX42XPXY");
+                        $dbConnection = $ProjectDatabase->connect();
+
+
+                        if ($loginCase==false) { //Wir sind im Registrieren
+                            $register_email = $_POST["user_email"];
+                            $register_firstname = $_POST["register_firstname"];
+                            $register_lastname = $_POST["register_lastname"];
+                            $register_password = $_POST["user_password"];
+                            $ProjectDatabase->registerUser($dbConnection, $register_firstname, $register_lastname, $register_email, $register_password, 0);
+                        }
+
+                            $userId = $ProjectDatabase->retrieveUserId($dbConnection, $userEmail);
+                        return $userId;
+                    //The method is specified in Version1DB.php
+
+                }
+
+                    function loginRetrieveId($userEmail){
+                    }
+                        //TODO Chat verknüpfung zu username!
+
+                ?>
+
+            <script>
+                function joinProject(projectId, projectTitle) {
+                    debugger;
+                    var projectId = projectId;
+                    var projectTitle = projectTitle;
+                    window.location = 'ProjectOverview.php?projectId=' + projectId +'&projectTitle='+ projectTitle;
+
+                    console.log("Hallo Eugen, ich bins");
+
+                }
+            </script>
         </div>
+    </div>
+
+
 
         <div class="divider"></div>
-
-
-
-
-        <!--Jetzt kommt Matthias-->
-<div class="container">
-
-    <div id="add_project_form" style="display: none">
-        <form action="ProjectFeed.php" method="post">
-            <label for="ProjectTitleInput">Dein Projektname:</label>
-            <input id="project_title" name="projecttitle" type="text"/>
-            <button type="submit">Starten</button>
-        </form>
-    </div> <!-- Das was kommt, wenn ich auf Plus drücke-->
-
-<div class="row" id="project_feed_row">
-
-    <?php
-
-
-    if (isLoginDataSent()||isSessionDataAvailable()){
-        if(!isSessionDataAvailable()){
-            setSessionData();
-        }
-        $user=$_SESSION["username"];
-        $pass=$_SESSION["password"];
-        $ProjectDatabase = new Version1DB("localhost",$user, $pass);
-        $dbConnection = $ProjectDatabase->connect();
-
-        //Case: User adds ProjectTitle
-
-        if (isset($_POST["projecttitle"])){
-            $ProjectDatabase->addNewProjectTitle($dbConnection, $_POST["projecttitle"]);
-        }
-        $allProjectList = $ProjectDatabase->getAllProjects($dbConnection);
-        printAllProjectsTable($allProjectList);
-    }
-    else{
-
-        echo "Du bist noch nicht eingeloggt";
-
-        $user="Eugen";
-        $pass="Eugen";
-        $ProjectDatabase = new Version1DB("localhost",$user, $pass);
-        $dbConnection = $ProjectDatabase->connect();
-
-        //Case: User adds ProjectTitle
-
-        if (isset($_POST["projecttitle"])){ //TODO Evtl. redundant.
-            $ProjectDatabase->addNewProjectTitle($dbConnection, $_POST["projecttitle"]);
-        }
-        $allProjectList = $ProjectDatabase->getAllProjects($dbConnection);
-        printAllProjectsTable($allProjectList);
-    }
-
-
-
-    function printAllProjectsTable($projectList) {
-
-        echo "<table>";
-        echo "<tr>";
-        echo "<th></th>";
-        echo "</tr>";
-
-
-        $img_url = "http://localhost:8888/media/images/projects/";
-
-
-
-
-        $rowCount = 0;
-        while ($row = $projectList->fetch()) { //Hier Cards rausspucken
-
-            //Cards_Code
-            $htmlForCards="<div class=\"card medium col s12 l6\">
-    <div class=\"card-image waves-effect waves-block waves-light\">
-      <img class=\"activator\" src=".$img_url.$row['projectId'].$row['projectImagePath']." style='width:300px' />
-    </div>
-	<!--Karten FrontFace-->
-    <div class=\"card-content\">
-      <span class=\"Chat card-title activator grey-text text-darken-4 \">".$row['projectTitle']."<i class=\"material-icons right\">video_library</i></span>
-      <p class=\"userName\">".$row['projectDescription']."</p>
-		<a href=\"Projekt.html\" class=\"blue lighten-1 waves-effect waves-light btn right\"><i class=\"material-icons left\">zoom_in</i>Details</a>
-		<a class=\"blue lighten-1 waves-effect waves-light btn right\"><i class=\"material-icons right\" onclick=\"joinRoom('DBChange','Eugen',0)\">chat</i>Chat</a>
-		
-    </div>
-		<!--Karten InnenSeite-->
-    <div class=\"card-reveal\">
-      <span class=\"card-title grey-text text-darken-4\">Wachse über dich Hinaus!<i class=\"material-icons right\">close</i></span>
-		
-		<div class=\"video-container\">
-        <iframe width=\"853\" height=\"480\" src=\"//www.youtube.com/embed/_nQoYH3lYBg?rel=0\" frameborder=\"0\" allowfullscreen></iframe>
-      </div>
-		<p>Das ist ein Text</p>
-    </div>
-  </div>";
-
-
-
-
-
-            echo $htmlForCards;
-            echo "<tr>";
-            echo "<td>".$row["projectTitle"]."
-            <button id=".$row['projectId'].">Mitmachen</button>
-            <img src=".$img_url.$row['projectImagePath']." style='width:300px' /></td>";
-            echo "</tr>";
-
-            echo "<tr>";
-            echo "</tr>";
-            $rowCount++;
-        }
-        echo "</table>";
-    }
-
-    ?>
-
-    <button class="btn-floating btn-large waves-effect waves-light light-blue" onclick="showAddProject()"><i class="material-icons">add</i></button>
-    <h1 style="display: none">Heading</h1>
-
-</div> <!--Der eigentliche ProjectFeed aus Datenbank-->
-    </div>
-
-
-
-
-
-
-
-        <!--Jetzt kommt wieder Eugen-->
-        <div class="divider"></div>
-
         <!--LadeKreis-->
-        <center>
             <div id="laden" class="preloader-wrapper active">
                 <div class="spinner-layer spinner-blue-only">
                     <div class="circle-clipper left">
@@ -282,24 +331,9 @@ include 'client.html';
                         <div class="circle"></div>
                     </div>
                 </div>
-            </div>
-        </center>
-
-        <!--Kreis zum hinzufügen-->
-        <div href="#AnRe" class="fixed-action-btn modal-trigger" style="bottom: 20px; left: 49%; margin-right: -51%;">
-            <a class="btn-floating btn-large" style="background-color:rgba(128,216,255,0.5);">
-                <i class="large material-icons">add</i>
-            </a>
-        </div>
-
-
-    </div>
+            </div></div>
     <!-- Registerkarte deine Projekte-->
     <div id="DeineProjekte" class="col s12">
-
-
-
-
 
 
 
@@ -336,9 +370,9 @@ include 'client.html';
 
 <!--modal Skript-->
 <script>
-    $(document).ready(function(){
+    $(document).ready(function(){//Wenn Dokument geladen ist,
         // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
-        $('.modal-trigger').leanModal();
+        $('.modal-trigger').leanModal(); //dann schaut es modal-trigger klassen ein und
     });
 </script>
 
@@ -368,19 +402,22 @@ include 'client.html';
     });
 </script>
 <!--ZumChatWeiterleiten-->
-<script type="text/javascript">
-    function joinRoom(id, name, Chatname) {
+<script type="text/javascript"> //TODO evtl löschen tex/javascript
+    function joinRoom(projectId, username, Chatname) { //Chatname wurde zu projectTitle
         debugger;
-        var uuid = name;
-        var ProjektName= id;
-        window.location = 'ChatRoom.html?uuid=' + uuid +'=PrNa='+ ProjektName;
+        var username = username; //username! TODO username dynamisch machen
+        var projectId= projectId;
+        window.location = 'ChatRoom.html?uuid=' + username +'=PrNa='+ projectId;
     }
+
+    //TODO Chat erste beim Login zulassen
 </script>
 
 
 
+
 <!--Anmelden Registrieren-->
-<div id="AnRe" class="modal bottom-sheet" style="font-size:125%;">
+<div id="AnmeldenRegistrieren" class="modal bottom-sheet" style="font-size:125%;" > <!-- ViewPorts Height-->
 
     <div class="modal-content">
         <div class="row">
@@ -401,55 +438,56 @@ include 'client.html';
                     <form class="col s12" action="ProjectFeed.php" method="post">
                         <div class="row">
 
-
-
                             <div class="input-field col s12">
                                 <i class="material-icons prefix">account_circle</i>
-                                <input id="email" type="email" class="validate">
-                                <label for="email" data-error="wrong" data-success="right">Email</label>
+                                <input id="username" type="email" class="validate" name="user_email">
+                                <label for="username" data-error="wrong">E-Mail</label>
                             </div>
 
                             <div class="input-field col s12">
                                 <i class="material-icons prefix">account_circle</i>
-                                <input id="Passwort" type="password" class="validate">
+                                <input id="Passwort" type="password" class="validate" name="user_password">
                                 <label for="Passwort">Passwort</label>
                             </div>
 
                         </div>
                         <button  class="modal-action modal-close waves-effect waves-green btn-flat right" type="submit">Loslegen</button>
                     </form>
+
                 </div>
 
             </div>
-            <!-- Registrieren-->
+            <!-- Registrieren--> <!-- TODO Passwortüberprüfung bauen-->
             <div id="Registrieren" class="col s12">
                 <div class="row">
-                    <form class="col s12" action="register.php" method="post">
+                    <form class="col s12" action="ProjectFeed.php" method="post">
                         <div class="row">
+
+                            <div class="input-field col s12">
+                                <i class="material-icons prefix">account_circle</i>
+                                <input id="email" type="email" class="validate" name="user_email"> <!-- Absichtlich so benannt, Postvariable, Key user_email ist gleich, egal ob man login macht oder registriert-->
+                                <label for="email" data-error="Fehlerhafte Adresse">Email-Adresse</label>
+                            </div>
+
 
                             <div class="input-field col s6">
                                 <i class="material-icons prefix">account_circle</i>
-                                <input id="icon_prefix" type="text" class="validate">
+                                <input id="icon_prefix" type="text" class="validate" name="register_firstname">
                                 <label for="icon_prefix">Vorname</label>
                             </div>
 
                             <div class="input-field col s6">
-                                <input id="icon_prefix" type="text" class="validate">
+                                <input id="icon_prefix" type="text" class="validate" name="register_lastname">
                                 <label for="icon_prefix">Nachname</label>
                             </div>
 
                             <div class="input-field col s12">
-                                <i class="material-icons prefix">email</i>
-                                <input id="email" type="email" class="validate">
-                                <label for="email" data-error="wrong" data-success="right">Email</label>
-                            </div>
-                            <div class="input-field col s12">
-                                <i class="material-icons prefix">account_circle</i>
-                                <input id="Passwort" type="password" class="validate">
+                                <i class="material-icons prefix">visibility_off</i>
+                                <input id="Passwort" type="password" class="validate" name="user_password">
                                 <label for="Passwort">Passwort</label>
                             </div>
                             <div class="input-field col s12">
-                                <i class="material-icons prefix">account_circle</i>
+                                <i class="material-icons prefix">visibility_off</i>
                                 <input id="Passwort" type="password" class="validate">
                                 <label for="Passwort">Passwort bestätigen</label>
                             </div>
@@ -480,7 +518,7 @@ include 'client.html';
 
     function showAddProject() {
 
-        document.getElementById('project_feed_row').style.display='none'; //Zunächst ausgeblendet
+        document.getElementById('all_projects').style.display='none'; //Zunächst ausgeblendet
         document.getElementById('add_project_form').style.display='block';
     }
 

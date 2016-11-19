@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"/>
+  <title>Projectfeed</title>
+
+  <!-- CSS  -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+</head>
+    <body>
+		<nav>
+    <div class="nav-wrapper blue">
+      <div class="col">
+        <a href="index.html" class="breadcrumb">Alle Projekte</a>
+        <a href="#!" class="breadcrumb">Projekt</a>
+      
+      </div>
+    </div>
+  </nav>
+		<!--Bilder Slider-->
+		<div class="slider col l12" Interval="100;">
+		<ul class="slides">
+			<!-- Ein Bild-->
+			<li>
+			<img src="Projekte/1/TitelBild.jpg">
+				<div class="caption center-align">
+				<h3>Die Deutsche Bank</h3>
+					<h5 class="light grey text text-lighten-3">Hier kriegst du deine Chance</h5>
+				</div>
+			</li>
+			<li>
+			<img src="Projekte/1/DetailsBild2.jpg">
+				<div class="caption left-align">
+				<h3>Die Deutsche Bank</h3>
+					<h5 class="light grey text text-lighten-3">Weiterbildung auf hochem Niveau</h5>
+				</div>
+			</li>
+			<li>
+			<img src="Projekte/1/DetailsBild3.jpg">
+				<div class="caption right-align">
+				<h3>Die Deutsche Bank</h3>
+					<h5 class="light grey text text-lighten-3">Möglichkeiten</h5>
+				</div>
+			</li>
+</ul>
+
+</div>
+		<div class="divider"></div>
+		<div class="row">
+			<div class="col s12 l6">
+		<div class="video-container">
+        <iframe width="853" height="480" src="//www.youtube.com/embed/p_W-7OdcL4U?rel=0" frameborder="0" allowfullscreen></iframe>
+      </div>
+		</div>
+			<div class="col s12 l6">
+			<h1>Fange deine Karriere an</h1>
+				<p>Als eine führende, global ausgerichtete Bank mit Wurzeln in Deutschland sind wir der Change- und Innovationsmotor unserer Branche. Das Arbeiten bei der Deutschen Bank bietet ein Arbeitsumfeld, in dem Sie Ihre Talente entfalten, eigene Ideen einbringen und die Basis für eine erfolgreiche Karriere legen können. Inspirierend. Herausfordernd. Vielfältig.
+				</p>
+			
+			</div>
+		</div>
+		<!--Anfang der Scripts-->
+		
+    <script>
+     $(document).ready(function(){
+    $('.tooltipped').tooltip({delay: 50});
+  });</script>
+  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script src="js/materialize.js"></script>
+  <script src="js/init.js"></script>
+  
+    
+    <script>
+    $(document).ready(function(){
+    $('.collapsible').collapsible({
+      accordion : false // A setting that changes the collapsible behavior to expandable instead of the default accordion style
+    });
+  });</script>
+		
+		<script>
+		$(document).ready(function(){
+			 $("#laden").hide();
+  });
+		</script>
+		
+		<script>$(document).ready(function(){
+      $('.slider').slider({full_width: true
+						  });
+				
+    });</script>
+		
+		<!-- Ende der Scripts-->
+  
+		
+  <a href="AnmeldeFormular.html" class="blue lighten-1 waves-effect waves-light btn right"><i class="material-icons left">work</i>Mitmachen</a>
+
+  </body>
+</html>

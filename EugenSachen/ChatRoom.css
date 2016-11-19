@@ -1,3 +1,7 @@
+.body {
+    background-color: lightblue;
+}
+
 .userList {
 	height:500px; 
 	width:200px; 
@@ -10,7 +14,8 @@
 .chatHistory {
 	height:500px; 
 	width:700px; 
-	background-color:#E6E6E6;
+    overflow-y: scroll;
+	background-color:#E6E6E6; 
 	position: absolute;
 	top: 15%;
 	left:25%;
@@ -41,9 +46,15 @@
 	left: 38%;
 }
 
+.ProjektName {
+	position: absolute;
+	top: 55%;
+	left: 38%;
+}
+
 .joinButton {
 	position: absolute;
-	top: 50%;
+	top: 55%;
 	left: 55%;
 }
 
