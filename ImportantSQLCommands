@@ -1,0 +1,41 @@
+General
+
+In order to receive all users:
+SELECT User FROM mysql.user;
+
+For deleting tuples(exp):
+DELETE FROM employees WHERE officeCode = 4;
+
+For deleting all tuples of a table:
+Truncate table XXX
+
+
+For inserting values into a specific column (exp)
+UPDATE Meeting
+SET MeetingNotes = 'testing'
+WHERE MeetingProcessId = '1001' AND MeetingId = '25'
+
+
+Change type of column
+ALTER TABLE Project MODIFY projectStartDate DATETIME;
+
+Format Datetime
+'9999-12-31 23:59:59'
+
+Add Column
+ALTER TABLE table_name
+ADD column_name datatype
+
+
+Concrete:
+
+INSERT INTO ProjectFeed (projectId, projectTitle, projectDescription, ProjectPoints, projectImagePath, correspondingPersonalType, thirdPartyProject, projectStartDate)
+VALUES (NULL,'Optimierter Netzausbau','SampleDescription',0,'OptimierterNetzausbau',0,0,'9999-12-31 23:59:59');
+
+
+AutoIncrement zurücksetzen:
+ALTER TABLE tablename AUTO_INCREMENT = 1
+
+
+
+

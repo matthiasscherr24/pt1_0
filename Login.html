@@ -1,0 +1,32 @@
+<!doctype html>
+<html>
+<head>
+	<title>Project Together 1.0</title>
+	<script src="http://cdn.pubnub.com/pubnub.min.js"></script>
+	<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.1.1/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="ChatRoom.css">
+</head>
+<body>
+	<h1 class="welcome">Herzlich Willkommen zum Chat!</h1>
+    <form>
+	<input id="userName" type="text" placeholder="Wie heist Du?" class="userNameBar" /><br>
+        <input id="Chat" type="text" placeholder="Wie heist dein Projekt?" class="ProjektName"/>
+    </form>
+    <button id="joinButton" class="btn btn-primary joinButton" onclick="joinRoom()">Mitmachen</button>
+    
+	<script type="text/javascript">
+		function joinRoom() { debugger;
+			var uuid = $('#userName').val();
+            var ProjektName= $('#Chat').val();
+			window.location = 'ChatRoom.html?uuid=' + uuid +'=PrNa='+ ProjektName; 
+		}
+        
+        $("input").keyup(function(event){
+    if(event.keyCode == 13){
+        $("#joinButton").click();
+    }
+});
+	</script>
+</body>
+</html>

@@ -1,0 +1,63 @@
+<!doctype html>
+<html>
+<head>
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"> </script>
+    <script>
+        function myFunction(name)
+{
+document.getElementById("Test").innerHTML = "Welcome " + name;
+}
+            function StrEqual(){
+               var str1= document.getElementById("Passwort1").value;
+                var str2= document.getElementById("Passwort2").value;
+                if(str1===str2){
+                    $("#Passwort1").css("background-color", "green");
+                    $("#Passwort2").css("background-color", "green");
+            document.getElementById("Test").innerHTML = "Passwoerter stimmen ueberein";
+                }
+             else{document.getElementById("Test").innerHTML = "Passwoerter stimmen nicht ueberein";
+             $("#Passwort1").css("background-color", "red");
+             $("#Passwort2").css("background-color", "red");;}
+            }
+            
+                $(document).ready(
+                    function(){
+    $("#Passwort2").keyup(function(){
+        StrEqual();
+    });
+    $("#Passwort1").keyup(function(){
+        StrEqual();
+        
+    });
+});
+            
+        
+    
+            </script>
+
+    </head>
+
+<body>
+   
+    
+    
+
+    <form method="get" action="ChatRoom.html">
+        Benutzername
+        <br>
+        <input id="Name" type="text" name="Name">
+        <br>
+        Passwort 1
+        <br>
+        <input id="Passwort1" type="password" name="Passwort1">     <br>
+        Passwort 2<br>
+        <input id="Passwort2" type="password" name="Passwort2"><br>
+        Chatname<br>
+        <input id="Chatname" type="text" name="Chatname"><br>
+        <input type="submit" vale="Senden!">
+</form>
+    <p id="Test"></p>
+    
+    
+</body>
+</html>
