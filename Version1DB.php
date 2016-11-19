@@ -56,6 +56,22 @@ class Version1DB
         }
 
     }
+
+    function getUserForename($dbConnection, $userId){
+
+        echo "Schritt2";
+
+        $retrieveUserForenameSQL="SELECT userFirstName FROM User WHERE userId ='$userId'";
+        $retrievedUserForename = $dbConnection->query($retrieveUserForenameSQL);
+
+        while ($row = $retrievedUserForename->fetch()) {
+
+            echo "Schritt3";
+            $userForename =$row['userFirstName'];
+            return $userForename;
+        }
+
+    }
     function getAllProjects($dbConnection)
     {
         $selectAllProjects = "SELECT * FROM Project";//TODO Überprüfe, welche Sachen wir auslesen wollen (evtl. zuviel mit *)
@@ -79,7 +95,7 @@ class Version1DB
 
 	    $server='localhost';
 
-        $createUserForUserRelation = "INSERT INTO USER VALUES (NULL,'".$userFirstName."','".$userLastName."','".$userEmail."', $thirdPartyUser)";
+        $createUserForUserRelation = "INSERT INTO USER VALUES (NULL,'".$userFirstName."','".$userLastName."','".$userEmail."', $thirdPartyUser,'".$userPassword."' )";
         $dbConnection->query($createUserForUserRelation);
 
         $retrieveUserIdSQL="SELECT userId FROM User WHERE userEmail = '".$userEmail."'";
