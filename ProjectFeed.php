@@ -212,7 +212,6 @@ include 'session_helper.php';
                     else{
 
                         echo "Du bist noch nicht eingeloggt";
-
                         $user="Eugen";
                         $pass="Eugen";
                         $ProjectDatabase = new Version1DB("localhost",$user, $pass);
@@ -279,7 +278,7 @@ include 'session_helper.php';
 
                     function registerUserViaServerRetrieveId($userEmail, $loginCase){
 
-                        $ProjectDatabase = new Version1DB("localhost", "Registrator", "Wqud4YjsNX42XPXY");
+                        $ProjectDatabase = new Version1DB("localhost", "Eugen", "Eugen");
                         $dbConnection = $ProjectDatabase->connect();
 
 

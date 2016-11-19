@@ -14,7 +14,7 @@
 	echo $password;
 	echo $username; 
 	
-	$ProjectDatabase = new Version1DB("localhost", "Registrator", "Wqud4YjsNX42XPXY");
+	$ProjectDatabase = new Version1DB("localhost", "Eugen", "Eugen");
 	
 	echo("Neues Objekt vom Typ Version1DB angelegt"); 
     $dbConnection=$ProjectDatabase->connect(); 
