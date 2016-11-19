@@ -271,6 +271,7 @@ include 'session_helper.php';
 </style>
     <div id="chat" class="container">
 
+     <?php   echo SESSION["userId"]; ?>
     </div>
 
 <!--LadeKreis-->

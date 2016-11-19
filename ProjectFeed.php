@@ -178,6 +178,8 @@ include 'session_helper.php';
                         }
                         //Zugangsdaten
                         $userEmail=$_SESSION["user_email"];
+
+                        echo $_SESSION["user_email"];
                         $userPassword=$_SESSION["user_password"];
                         $loginCase = true;
                         //Jetzt kommt der Fall, dass man über eine Registrierung kommt
@@ -186,11 +188,24 @@ include 'session_helper.php';
                         }
 
                         $userId = registerUserViaServerRetrieveId($userEmail,$loginCase);//Dies ist nur beim Registrieren der Fall!
-                        $_SESSION["userId"]=$userId; //Wichtig, Session für UserId
+
+                        echo $userId;
+
+                        $forename = getUserForename($userId);
+                        echo "Schritt 4";
+                        echo $forename;
+                        $_SESSION["fore_name"] = $forename;
+                        echo "Schritt 5";
+                        echo $_SESSION["fore_name"];
+                        echo "Schritt 6";
+
 
                         //Jetzt wird die eigentliche Datenbankverbindung aufgebaut
-                        $ProjectDatabase = new Version1DB("localhost",$userId, $userPassword);
+                        $ProjectDatabase = new Version1DB("localhost","Eugen", "Eugen");
                         $dbConnection = $ProjectDatabase->connect();
+
+
+
                         // Case user adds Projects:
                         if (isset($_POST["projecttitle"])){
                             $ProjectDatabase->addNewProjectTitle($dbConnection, $_POST["projecttitle"],$_POST["projectdescription"],0);
@@ -299,6 +314,19 @@ include 'session_helper.php';
 
                     function loginRetrieveId($userEmail){
                     }
+
+                    function getUserForename($userId){
+
+                        echo "Schritt1";
+                        $ProjectDatabase = new Version1DB("localhost", "Eugen", "Eugen");
+                        $dbConnection = $ProjectDatabase->connect();
+
+                        $userForename = $ProjectDatabase->getUserForename($dbConnection, $userId);
+                        return $userForename;
+
+
+                    }
+
                         //TODO Chat verknüpfung zu username!
 
                 ?>
