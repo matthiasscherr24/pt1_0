@@ -3,6 +3,9 @@ session_start();
 include 'Version1DB.php';
 include 'session_helper.php';
 include 'EugenChat2.txt';
+
+
+include 'client.html'; 
 ?>
 
 
