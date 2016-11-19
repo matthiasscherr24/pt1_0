@@ -207,6 +207,7 @@ include 'session_helper.php';
 
 
                         echo $htmlPlusBtnLoggedIn;
+                        echo SESSION['userId'];
 
                     }
                     else{
