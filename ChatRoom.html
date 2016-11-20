@@ -84,7 +84,7 @@
 			var publish_key = 'pub-c-41e3c5e3-9401-4a1f-87ab-2d10b53acd1c';
 			var subscribe_key = 'sub-c-b23c5580-624b-11e6-9c81-02ee2ddab7fe';
 
-			var username = window.location.search.substring(1).split('=')[1];
+			var username = '<?php echo $_SESSION["fore_name"];?>';
 
             var Chat = window.location.search.substring(1).split('=')[3];
             Head(username,Chat);

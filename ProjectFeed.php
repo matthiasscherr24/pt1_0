@@ -189,15 +189,11 @@ include 'session_helper.php';
 
                         $userId = registerUserViaServerRetrieveId($userEmail,$loginCase);//Dies ist nur beim Registrieren der Fall!
 
-                        echo $userId;
 
                         $forename = getUserForename($userId);
-                        echo "Schritt 4";
-                        echo $forename;
+
                         $_SESSION["fore_name"] = $forename;
-                        echo "Schritt 5";
-                        echo $_SESSION["fore_name"];
-                        echo "Schritt 6";
+
 
 
                         //Jetzt wird die eigentliche Datenbankverbindung aufgebaut
@@ -222,7 +218,6 @@ include 'session_helper.php';
 
 
                         echo $htmlPlusBtnLoggedIn;
-                        echo SESSION['userId'];
 
                     }
                     else{
@@ -317,7 +312,7 @@ include 'session_helper.php';
 
                     function getUserForename($userId){
 
-                        echo "Schritt1";
+
                         $ProjectDatabase = new Version1DB("localhost", "Eugen", "Eugen");
                         $dbConnection = $ProjectDatabase->connect();
 

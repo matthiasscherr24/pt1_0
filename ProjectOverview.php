@@ -20,6 +20,26 @@ include 'session_helper.php';
     <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
     <link href="css/pt.css" type="text/css" rel="stylesheet" media="screen,projection"/>
 
+    <script src="http://cdn.pubnub.com/pubnub.min.js"></script>
+    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+    <!-- unsichtbar Scrollen-->
+    <style>
+        html {
+            overflow: scroll;
+            overflow-x: hidden;
+        }
+        ::-webkit-scrollbar {
+            width: 0px;  /* remove scrollbar space */
+            background: transparent;  /* optional: just make scrollbar invisible */
+        }
+        /* optional: show position indicator in red */
+        ::-webkit-scrollbar-thumb {
+            background: #FF0000;
+        }
+
+
+    </style>
     <!--JS-->
     <script src="js/pubnub-3.16.1.min.js"></script>
 </head>
@@ -205,7 +225,6 @@ include 'session_helper.php';
 
                 echo $htmlMilestonesPart1;
 
-                echo "GIT TESTENsdjfaöskdfjaslöf";
 
 
                 $taskDatabase = new Version1DB("localhost","Eugen","Eugen");
@@ -269,10 +288,39 @@ include 'session_helper.php';
     }
 
 </style>
+
     <div id="chat" class="container">
 
-     <?php   echo SESSION["userId"]; ?>
-    </div>
+        <div class="row">
+
+            <!--<div id="userList" class="userList col s3" ></div>-->
+
+
+
+            <div id="chatHistory" class="col s12 table-bordered chatHistory" style="height:445px;width:100%%;overflow-x:hidden;overflow-y: visible;"></div>
+
+
+
+
+            <div>
+                <!--<button id="leaveButton" class="btn btn-danger leaveButton left col s2" onclick="leave()">Verlassen</button>-->
+                <div class="row">
+                    <div class="input-field col s9 offset-s1">
+
+                        <textarea  id="message" class="materialize-textarea" ></textarea>
+                        <label for="message">Nachricht</label>
+                    </div>
+                    <div class="col s2">
+                        <br>
+                        <br>
+
+                        <a class="btn-floating btn-tiny waves-effect waves-light blue hide-on-med-and-up" id="sendButton"><i class="material-icons">send</i></a>
+                    </div>
+                </div>
+        </div>
+        </div>
+
+
 
 <!--LadeKreis-->
 <div id="laden" class="preloader-wrapper active">
@@ -294,9 +342,6 @@ include 'session_helper.php';
 <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 <script src="js/materialize.js"></script>
 <script src="js/init.js"></script>
-
-
-
 
 <!-- Ladekreis Skript, wenn Seite geladen nicht zeigen-->
 <script>
@@ -344,6 +389,158 @@ include 'session_helper.php';
     $(document).ready(function() {
         $('input#input_text, textarea#textarea1').characterCounter();
     });
+</script>
+
+<!-- PubNub Chat Zeug-->
+<script type="text/javascript">
+    (function() {
+        var publish_key = 'pub-c-41e3c5e3-9401-4a1f-87ab-2d10b53acd1c';
+        var subscribe_key = 'sub-c-b23c5580-624b-11e6-9c81-02ee2ddab7fe';
+
+        var username = '<?php echo $_SESSION["fore_name"];?>';
+
+        var Chat = '<?php echo $_GET["projectId"];?>';
+        channel = Chat;
+        pubnub =PUBNUB.init({
+            publish_key : publish_key,
+            subscribe_key : subscribe_key,
+            uuid : username
+        });
+
+
+        pubnub.subscribe({
+            channel : channel,
+            callback : function(message) {
+
+                if(message.slice(24,24+username.length).includes(username)==1){
+
+                    $('#chatHistory')[0].innerHTML =$('#chatHistory')[0].innerHTML+'<div class="card-panel z-depth-1 col s9 offset-s3 blue lighten-5">'+message+'</div>';}
+                else{
+                    $('#chatHistory')[0].innerHTML 			  =$('#chatHistory')[0].innerHTML+'<div class="card-panel z-depth-1 col s9 grey lighten-5">'+message+'</div>';}
+
+
+
+
+                $('#chatHistory').scrollTop(9999);
+
+            },
+            presence : function(state) {
+                if (state.action == 'join') {
+                    if ($('#userList').text().indexOf(state.uuid) == -1) {
+                        $('#userList')[0].innerHTML = state.uuid + '<br/>' + $('#userList')[0].innerHTML;
+                    }
+                } else if (state.action == 'leave' || state.action == 'timeout') {
+                    var index = $('#userList')[0].innerHTML.indexOf(state.uuid);
+                    if ( index !== -1) {
+                        $('#userList')[0].innerHTML =
+                            $('#userList')[0].innerHTML.substring(0,index) +
+                            $('#userList')[0].innerHTML.substring(index+state.uuid.length+4);
+                    }
+                }
+
+            }
+
+        });
+
+        $("#message").keyup(function(event){
+            if(event.keyCode == 13){
+                //Uhrzeit bestimmen
+                var date=new Date();
+                var Hours =date.getHours();
+                var Minutes =date.getMinutes();
+
+                if (Hours<10){
+                    Hours= '0'+date.getHours();
+
+                }
+                if (Minutes<10){
+                    Minutes= '0'+date.getMinutes();
+                }
+
+                pubnub.publish({ //Das was rauskommt
+                    channel : channel,
+                    message : '<span class="grey-text">'+pubnub.get_uuid()+'<span class="black-text"></br>'+ $('#message').val()+'<span class="grey-text right">'+Hours+':'+ Minutes+'</span></br>'+'</span>'
+                    //TODO Namen kleiner machen!
+                });
+                $('#message').val('');
+
+
+            }
+        });
+
+        $(document).ready(function() {
+            pubnub.history({ //Die abgespeicherten Nachrichten
+                    channel: Chat,
+                    count: 50},
+                function(messages){
+                    var m ='';
+
+                    for(var i = 0; i < messages[0].length; i++) {
+
+                        if(messages[0][i].slice(24,24+username.length).includes(username)==1){
+                            m=m+'<div class="card-panel z-depth-1 col s9 offset-s3 blue lighten-5">'+messages[0][i]+'</div>';}
+                        else{m=m+'<div class="card-panel z-depth-1 col s9 grey lighten-5">'+messages[0][i]+'</div>';}
+                    }
+                    $('#chatHistory')[0].innerHTML = m + $('#chatHistory')[0].innerHTML;
+                    $('#chatHistory').scrollTop(9999);
+                }
+            );});
+
+        pubnub.bind('click', pubnub.$('sendButton'), function(e) {
+
+            //Uhrzeit bestimmen
+            var date=new Date();
+            var Hours =date.getHours();
+            var Minutes =date.getMinutes();
+
+            if (Hours<10){
+                Hours= '0'+date.getHours();
+
+            }
+            if (Minutes<10){
+                Minutes= '0'+date.getMinutes();
+            }
+
+            pubnub.publish({
+                channel : channel,
+                message : '<span class="grey-text">'+pubnub.get_uuid()+'<span class="black-text"></br>'+ $('#message').val()+'<span class="grey-text right">'+Hours+':'+ Minutes+'</span></br>'+'</span>'
+
+            });
+            $('#message').val('');
+
+        });
+
+    })();
+
+
+
+
+</script>
+
+<!--Script-->
+<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script src="js/materialize.js"></script>
+<script src="js/init.js"></script>
+
+<!--TextArea-->
+<script>
+    $(document).ready(function() {
+        $('textarea#message').characterCounter();
+        $('#message').trigger('autoresize');
+    });
+</script>
+
+<script type="text/javascript">
+
+    function leave() {
+        pubnub.unsubscribe({
+            channel : channel,
+            callback : function() {
+                window.location = 'index.html';
+            }
+        });
+    }
+
 </script>
 
 </body>
