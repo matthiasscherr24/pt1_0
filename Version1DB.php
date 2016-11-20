@@ -59,14 +59,11 @@ class Version1DB
 
     function getUserForename($dbConnection, $userId){
 
-        echo "Schritt2";
 
         $retrieveUserForenameSQL="SELECT userFirstName FROM User WHERE userId ='$userId'";
         $retrievedUserForename = $dbConnection->query($retrieveUserForenameSQL);
 
         while ($row = $retrievedUserForename->fetch()) {
-
-            echo "Schritt3";
             $userForename =$row['userFirstName'];
             return $userForename;
         }

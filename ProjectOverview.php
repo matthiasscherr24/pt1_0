@@ -146,6 +146,13 @@ include 'session_helper.php';
 
             echo $_POST["milestonetitle"];
         }
+        
+        if (isset($_POST["tasktitle"])){
+
+            $taskTitle = $_POST["tasktitle"]; 
+            $milestoneId = $_POST["milestoneId"];
+            $milestoneDatabase->addNewTask($mDbConnection, $taskTitle, "taskDescription", $milestoneId);
+        }
 
         $milestoneList = $milestoneDatabase->getMilestones($mDbConnection,$projectId);
         printMilestones($milestoneList);
@@ -186,18 +193,20 @@ include 'session_helper.php';
                 $milestoneId = $row["milestoneId"];
 
                     $htmlMilestonesPart1 =
-                        "<ul class=\"collapsible\" data-collapsible=\"accordion\" style=\"position: static\"><li><div class=\"collapsible-header\" style=\"position: relative\">
-                    <h5 style=\"font-weight: 400; text-align: left\">$milestoneTitle</h5>
-                    <div class=\"row\">
-                        <div class=\"col s8\" style=\"position: static\">
-                            <div class=\"divider\"></div>
-                            <p style=\"line-height: 130%\">$milestoneDescription</p>
-                        </div>
+                        "<ul class=\"collapsible\" data-collapsible=\"accordion\" style=\"position: static\">
+                        <li>
+                            <div class=\"collapsible-header\" style=\"position: relative\">
+                                <h5 style=\"font-weight: 400; text-align: left\">$milestoneTitle</h5>
+                                 <div class=\"row\">
+                                 <div class=\"col s8\" style=\"position: static\">
+                                 <div class=\"divider\"></div>
+                                    <p style=\"line-height: 130%\">$milestoneDescription</p>
+                                 </div>
 
-                        <div class=\"col s4\" style=\"position: static\">
+                                 <div class=\"col s4\" style=\"position: static\">
                                 <div class=\"chip\" style=\"position: absolute; right: 10px; bottom: 20px;\">1.12.2016</div>
-                        </div>
-                    </div>
+                                 </div>
+                                </div>
                 </div>
                 <div class=\"collapsible-body\" style=\"position: relative\">
                 <div class=\"col s8\"
@@ -205,36 +214,56 @@ include 'session_helper.php';
 
                 echo $htmlMilestonesPart1;
 
-                echo "GIT TESTENsdjfaöskdfjaslöf";
 
 
                 $taskDatabase = new Version1DB("localhost","Eugen","Eugen");
                 $tDbConnection= $taskDatabase->connect();
                 $taskList = $taskDatabase->getTask($tDbConnection,$milestoneId);
 
+                $i=1; //Variable for indeterminate-checkbox
+                //
               while ($rowTask = $taskList->fetch()){
+                    $i++;
                     $taskTitle = $rowTask["taskTitle"];
-                    $taskDescription =$rowTask["taskDescription"];
-
-                    $htmlTask = "<input type=\"checkbox\" id=\"indeterminate-checkbox1\" />
-                        <label for=\"indeterminate-checkbox1\">$taskTitle</label>
+                    $htmlTask =
+                  "<input type=\"checkbox\" id=\"indeterminate-checkbox$i\" />
+                        <label for=\"indeterminate-checkbox$i\">$taskTitle</label>
                         <br>";
                     echo $htmlTask;
                 }
+                $projectId=$_GET["projectId"];
+                $projectTitle = $_GET["projectTitle"];
+                $urlProjectOverview = "ProjectOverview.php?projectId=".$projectId."&projectTitle=".$projectTitle;
+
                 $htmlMilestonesPart2="</form>
-                </div><div class=\"col s4\" style=\"position: static\">
+                </div>
+                
+                <div class=\"col s4\" style=\"position: static\">
                         <a class=\"modal-trigger\" style=\"position: absolute; bottom: 20px; right:20px; color: #1976d2; text-align: center;\" href=\"#new_task\">Aufgabe <br>hinzufügen</a>
                         <!-- Modal Structure -->
                         <div id=\"new_task\" class=\"modal\">
                             <div class=\"modal-content\">
-                                <h4>Wie lautet die neue Aufgabe?</h4>
-                                <p>A bunch of text</p>
-                            </div>
-                            <div class=\"modal-footer\">
-                                <a href=\"#!\" class=\" modal-action modal-close waves-effect waves-green btn-flat\">Agree</a>
+                            
+                               <form action=$urlProjectOverview method=\"post\">
+
+                               <div class='col s3'>
+                                <label for=\"task_title\"><p style=\"font-size: medium\">Deine Aufgabe:</p></label>
+                                <input id=\"task_title\" name=\"tasktitle\" type=\"text\" class=\"input-field\"/>
+                                
+                                <div class=\"modal-footer\">
+                                    <button type=\"submit\" class=\"modal-close waves-effect waves-green btn-flat\">Erstellen</button>
+                                </div>
+                                </div>
+                                
+                            </form>
+
+
+
                             </div>
                         </div>
                     </div></div></ul>";
+
+
                     echo($htmlMilestonesPart2);
 
                 $rowCount++;

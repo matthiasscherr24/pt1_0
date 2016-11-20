@@ -192,12 +192,9 @@ include 'session_helper.php';
                         echo $userId;
 
                         $forename = getUserForename($userId);
-                        echo "Schritt 4";
                         echo $forename;
                         $_SESSION["fore_name"] = $forename;
-                        echo "Schritt 5";
                         echo $_SESSION["fore_name"];
-                        echo "Schritt 6";
 
 
                         //Jetzt wird die eigentliche Datenbankverbindung aufgebaut
@@ -226,7 +223,6 @@ include 'session_helper.php';
                     }
                     else{
 
-                        echo "Du bist noch nicht eingeloggt";
                         $user="Eugen";
                         $pass="Eugen";
                         $ProjectDatabase = new Version1DB("localhost",$user, $pass);
@@ -262,11 +258,14 @@ include 'session_helper.php';
                             $projectId=$row["projectId"];
                             $projectTitle = $row["projectTitle"];
                             $projectDescription = $row["projectDescription"];
+                            $projectImagePath = $row["projectImagePath"];
 
+
+                            $final_im_url = $img_url."/".$projectId.$projectImagePath;
                             //Hier Cards ausgeben
                             $htmlForCards = "<div id=\"leutturm_projekt\" class=\"card\">
                 <div class=\"card-image waves-effect waves-block waves-light\">
-                    <img class=\"activator\" src=\"media/images/aias.jpg\">
+                    <img class=\"activator\" src=\"$final_im_url\">
                 </div>
                 <div class=\"card-content\">
                     <span class=\"card-title activator grey-text text-darken-4\">$projectTitle<i class=\"material-icons right\">more_vert</i></span>
@@ -316,7 +315,6 @@ include 'session_helper.php';
 
                     function getUserForename($userId){
 
-                        echo "Schritt1";
                         $ProjectDatabase = new Version1DB("localhost", "Eugen", "Eugen");
                         $dbConnection = $ProjectDatabase->connect();
 
